@@ -1,0 +1,23 @@
+{
+  "name": "chart-creator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --watch --mode development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.2.3",
+    "webpack": "^5.26.3",
+    "webpack-cli": "^4.5.0"
+  },
+  "dependencies": {
+    "@types/d3": "^6.3.0",
+    "d3": "^6.6.0",
+    "ts-loader": "^8.0.18"
+  }
+}
