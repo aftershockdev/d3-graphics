@@ -1,7 +1,5 @@
 import * as d3 from "d3";
-
-import BarChart from "./charts/BarChart";
-import LineChart from "./charts/LineChart";
+import ChartConfigurator from "./ChartConfigurator";
 
 interface ChartsInterface {
   element: string;
@@ -12,6 +10,7 @@ interface ChartsInterface {
   margin: {
     [key: string]: number;
   };
+  type: string;
 }
 export default class ChartsCreator implements ChartsInterface {
   element: string;
@@ -22,6 +21,7 @@ export default class ChartsCreator implements ChartsInterface {
   margin: {
     [key: string]: number;
   };
+  type: string;
 
   defaults = {
     width: 1300,
@@ -35,10 +35,8 @@ export default class ChartsCreator implements ChartsInterface {
   };
 
   constructor(element: string, options: object) {
-    let types: string[] = ["Line", "Bar", "Universal"];
-
     this.element = element;
-    Object.assign(this, this.defaults, options, types);
+    Object.assign(this, this.defaults, options);
   }
 
   public init(): void {
@@ -48,15 +46,7 @@ export default class ChartsCreator implements ChartsInterface {
       .attr("width", this.width)
       .attr("height", this.height)
       .attr("overflow", "visible"));
-    // this.createBarChart(this.data);
-    this.createLineChart(this.data);
-  }
 
-  private createLineChart(data: object[] | any): void {
-    const chart = new LineChart(this).render(data);
-  }
-
-  private async createBarChart(data: object[]) {
-    const chart = new BarChart(this).render(data);
+    new ChartConfigurator(this.type, this.data, this).render();
   }
 }

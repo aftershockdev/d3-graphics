@@ -27,10 +27,8 @@ export default class LineChart implements LineInterface {
   line: d3.Line<any>;
   lineCurve: d3.CurveFactoryLineOnly;
 
-  constructor(context: any) {
+  render(data: object[] | any, context: any): void {
     Object.assign(this, context);
-  }
-  render(data: object[] | any): void {
     let x = d3
       .scaleTime()
       .domain(<[number, number]>d3.extent(data, (d: LineFunc) => d.date))
