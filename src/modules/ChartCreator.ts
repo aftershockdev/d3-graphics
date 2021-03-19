@@ -1,6 +1,8 @@
 import * as d3 from "d3";
-import ChartConfigurator from "./ChartConfigurator";
-
+import { configurateData } from "./configData";
+import BarChart from "./charts/BarChart";
+import LineChart from "./charts/LineChart";
+import { registerChart, getChart } from "./charts/ChartsRegistration";
 interface ChartsInterface {
   element: string;
   data: object[];
@@ -11,6 +13,11 @@ interface ChartsInterface {
     [key: string]: number;
   };
   type: string;
+}
+
+interface ChartParams {
+  type: string;
+  data: object[];
 }
 export default class ChartsCreator implements ChartsInterface {
   element: string;
@@ -34,19 +41,39 @@ export default class ChartsCreator implements ChartsInterface {
     },
   };
 
-  constructor(element: string, options: object) {
+  constructor(element: string, { type, data }: ChartParams) {
     this.element = element;
-    Object.assign(this, this.defaults, options);
+    this.type = type;
+    this.data = data;
+    this.svg = null;
+    this.init();
   }
 
-  public init(): void {
+  private init(): void {
     const svg = (this.svg = d3
       .select(this.element)
       .append("svg")
-      .attr("width", this.width)
-      .attr("height", this.height)
+      .attr("width", this.defaults.width)
+      .attr("height", this.defaults.height)
       .attr("overflow", "visible"));
 
-    new ChartConfigurator(this.type, this.data, this).render();
+    let lineChart = new LineChart();
+    let barChart = new BarChart();
+
+    switch (this.type) {
+      case "bar":
+        registerChart(this.type, barChart);
+        break;
+      case "line":
+        registerChart(this.type, lineChart);
+        break;
+    }
+  }
+
+  public render() {
+    let chartData = configurateData(this.type, this.data);
+    let chartSettings = Object.assign(this.defaults, { svg: this.svg });
+
+    getChart(this.type).render(chartData, chartSettings);
   }
 }

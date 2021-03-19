@@ -27,7 +27,18 @@ export default class LineChart implements LineInterface {
   line: d3.Line<any>;
   lineCurve: d3.CurveFactoryLineOnly;
 
-  render(data: object[] | any, context: any): void {
+  render(arr: object[] | any, context: any): void {
+    const dateFormatter = d3.timeFormat("%Y/%m/%d");
+    const dateParser = d3.timeParse("%Y-%m-%dT%H:%M:%SZ");
+
+    let data = arr.map((el: any) => {
+      let obj = {
+        date: dateParser(el.date),
+        value: el.value,
+      };
+      return obj;
+    });
+
     Object.assign(this, context);
     let x = d3
       .scaleTime()
@@ -49,8 +60,6 @@ export default class LineChart implements LineInterface {
     const scaleX = (this.scaleY = d3.scaleTime().range([0, innerWidth]));
 
     const scaleY = (this.scaleY = d3.scaleLinear().range([innerHeight, 0]));
-
-    const dateFormatter = d3.timeFormat("%Y/%m/%d");
 
     this.line = d3
       .line<LineFunc>()

@@ -1538,13 +1538,12 @@ let testData: object[] = [
     Date: "2020-07-26T00:00:00Z",
   },
 ];
-
-let mainChart = new ChartCreator(".main", {
+new ChartCreator(".local3", {
   data: testData,
   type: "bar",
-}).init();
+}).render();
 
-let localChart = new ChartCreator(".local", {
+new ChartCreator(".local1", {
   data: testData,
   type: "line",
-}).init();
+}).render();
