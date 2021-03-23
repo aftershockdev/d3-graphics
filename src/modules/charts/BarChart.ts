@@ -61,7 +61,7 @@ export default class BarChart implements BarInterface {
 
     diagram.append("g").attr("class", "y axis").call(yAxis);
 
-    let bars = diagram.append("g");
+    let bars = diagram.append("g").attr("transform", "translate(10,-5)");
 
     bars
       .selectAll("rect")
@@ -71,6 +71,7 @@ export default class BarChart implements BarInterface {
       .attr("class", "bar")
       .attr("y", (d: BarFunc) => height)
       .attr("height", 0)
+      .attr("fill", "lightgrey")
       .transition()
       .duration(750)
       .delay(function (d, i) {
@@ -83,7 +84,7 @@ export default class BarChart implements BarInterface {
       .attr("height", (d: BarFunc) => height - yscale(d.value))
       .attr("width", xscale.bandwidth() - 10);
 
-    let labels = diagram.append("g");
+    let labels = diagram.append("g").attr("transform", "translate(10,-5)");
 
     labels
       .selectAll(".label")
