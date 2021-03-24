@@ -20,6 +20,8 @@ export interface ChartParams {
   data: object[];
   x: string;
   y: string;
+  xType?: string;
+  yType?: string;
 }
 export default class ChartsCreator implements ChartsInterface {
   element: string;
@@ -33,6 +35,9 @@ export default class ChartsCreator implements ChartsInterface {
   type: string;
   x: string;
   y: string;
+  xType?: string;
+  yType?: string;
+  dataConfig: object;
 
   defaults = {
     width: 1300,
@@ -45,14 +50,17 @@ export default class ChartsCreator implements ChartsInterface {
     },
   };
 
-  constructor(element: string, { type, data, x, y }: ChartParams) {
+  constructor(
+    element: string,
+    { type, data, x, y, xType, yType }: ChartParams
+  ) {
     this.element = element;
     this.type = type;
     this.data = data;
-    this.x = x;
-    this.y = y;
+    this.xType = xType;
     this.svg = null;
     this.init();
+    this.dataConfig = Object.assign({}, { data, x, y, xType, yType });
   }
 
   private init(): void {
@@ -76,10 +84,10 @@ export default class ChartsCreator implements ChartsInterface {
     }
   }
 
-  public render() {
-    let chartData = configurateData(this.data, this.x, this.y);
-    let chartSettings = Object.assign(this.defaults, { svg: this.svg });
+  // public render() {
+  //   let chartData = configurateData(this.dataConfig);
+  //   let chartSettings = Object.assign(this.defaults, { svg: this.svg });
 
-    getChart(this.type).render(chartData, chartSettings);
-  }
+  //   getChart(this.type).render(chartData, chartSettings, this.xType);
+  // }
 }

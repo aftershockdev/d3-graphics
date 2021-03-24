@@ -25,18 +25,21 @@ export default class BarChart implements BarInterface {
   };
   svg: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
 
-  render(data: object[] | any, context: any): void {
+  render(data: object[] | any, context: any, xType: string): void {
     Object.assign(this, context);
     let width = this.width;
     let height = this.height;
+
     let maxLength: any = d3.max(data.map((d: any) => d.date.length));
     let marginOverview = { top: 30, right: 10, bottom: 20, left: 40 };
     let barWidth: number = maxLength * 8;
     let numBars: number = Math.round(width / barWidth);
     let isScrollDisplayed: boolean = barWidth * data.length > width;
+
     let heightOverview: number =
       80 - marginOverview.top - marginOverview.bottom;
     let selectorHeight: number = 40;
+    console.log(xType);
 
     let xscale = d3
       .scaleBand()

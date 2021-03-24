@@ -1,4 +1,5 @@
 import ChartCreator from "./modules/ChartCreator";
+import newChartCreator from "./modules/newChartCreator";
 
 let testCase: object[] = [
   {
@@ -9,7 +10,7 @@ let testCase: object[] = [
     CityCode: "",
     Lat: "0",
     Lon: "0",
-    Cases: 240,
+    Cases: "240",
     Status: "confirmed",
     Date: "2020-03-21T00:00:00Z",
   },
@@ -1538,7 +1539,6 @@ let testCase: object[] = [
     Date: "2020-07-26T00:00:00Z",
   },
 ];
-
 let testCaseTwo: object[] = [
   { date: "2014-11-01", value: 12 },
   { date: "2014-11-02", value: 14 },
@@ -1556,12 +1556,13 @@ let testCaseTwo: object[] = [
   { date: "2014-11-14", value: 258 },
   { date: "2014-11-15", value: 343 },
   { date: "2014-11-16", value: 55 },
-  { date: "2014-12-17", value: 313 },
-  { date: "2014-12-18", value: 412 },
-  { date: "2014-12-19", value: 235 },
-  { date: "2014-12-20", value: 431 },
+  { date: "2014-11-17", value: 313 },
+  { date: "2014-11-18", value: 412 },
+  { date: "2014-11-19", value: 235 },
+  { date: "2014-11-20", value: 431 },
+  { date: "2014-11-21", value: 531 },
+  { date: "2014-11-22", value: 631 },
 ];
-
 let testCaseThree: object[] = [
   {
     ID: "c121588d-f5b2-465e-9b70-076ee51d70fc",
@@ -1574,7 +1575,7 @@ let testCaseThree: object[] = [
     Lon: "31.99",
     Confirmed: 35229,
     Deaths: 570,
-    Recovered: 16322,
+    Recovered: 1231,
     Active: 18337,
     Date: "2021-01-14T00:00:00Z",
   },
@@ -2119,7 +2120,6 @@ let testCaseThree: object[] = [
     Date: "2021-01-15T00:00:00Z",
   },
 ];
-
 let testCaseFour: object[] = [
   { name: "Ruslan", efficiency: "35" },
   { name: "Anton", efficiency: "45" },
@@ -2135,62 +2135,71 @@ let testCaseFour: object[] = [
   { name: "Nikolay", efficiency: "41" },
   { name: "Josh", efficiency: "41" },
 ];
+let testCaseFive: object[] = [
+  { x: 10, y: 20 },
+  { x: 12, y: 20 },
+  { x: 30, y: 30 },
+  { x: 40, y: 40 },
+  { x: 50, y: 50 },
+  { x: 60, y: 60 },
+  { x: 70, y: 70 },
+  { x: 80, y: 80 },
+  { x: 90, y: 90 },
+  { x: 100, y: 100 },
+];
 
 ///////// lines
 
-new ChartCreator(".local.one", {
-  data: testCase,
-  type: "line",
-  x: "Date",
-  y: "Cases",
-}).render();
+new newChartCreator().generate(
+  testCase,
+  {
+    type: "bar",
+    x: "Province",
+    y: "Cases",
+  },
+  {
+    Country: {
+      type: "string",
+    },
+    CountryCode: {
+      type: "string",
+    },
+    Province: {
+      type: "string",
+    },
+    City: {
+      type: "string",
+    },
+    CityCode: {
+      type: "string",
+    },
+    Lat: {
+      type: "string",
+    },
+    Lon: {
+      type: "string",
+    },
+    Cases: {
+      type: "number",
+    },
+    Status: {
+      type: "string",
+    },
+    Date: {
+      type: "date",
+    },
+  }
+);
 
 // new ChartCreator(".local.two", {
-//   data: testCaseTwo,
-//   type: "line",
-//   x: "date",
-//   y: "value",
-// }).render();
-
-// new ChartCreator(".local.three", {
-//   data: testCaseThree,
-//   type: "line",
-//   x: "Date",
-//   y: "Deaths",
-// }).render();
-
-// ///////// bars
-// new ChartCreator(".local.five", {
-//   data: testCase,
+//   data: [
+//     { x: 10, y: 20 },
+//     { x: 12, y: 20 },
+//     { x: 30, y: 30 },
+//     { x: 40, y: 40 },
+//   ],
 //   type: "bar",
-//   x: "Date",
-//   y: "Cases",
+//   x: "x",
+//   y: "y",
+//   xType: "linear",
 // }).render();
-
-// new ChartCreator(".local.six", {
-//   data: testCaseTwo,
-//   type: "bar",
-//   x: "date",
-//   y: "value",
-// }).render();
-
-new ChartCreator(".local.seven", {
-  data: testCaseThree,
-  type: "bar",
-  x: "Province",
-  y: "Confirmed",
-}).render();
-
-// new ChartCreator(".local.eight", {
-//   data: testCaseFour,
-//   type: "bar",
-//   x: "name",
-//   y: "efficiency",
-// }).render();
-
-// new TestCreator(".local", {
-//   data: testCase,
-//   type: "bar",
-//   x: "Date",
-//   y: "Cases",
-// }).draw();
